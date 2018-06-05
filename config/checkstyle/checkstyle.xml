@@ -1,0 +1,476 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+          "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+          "http://checkstyle.sourceforge.net/dtds/configuration_1_3.dtd">
+
+<!--
+
+  Checkstyle configuration that checks a subset of coding conventions from:
+
+    - Google coding conventions from Google Java Style
+    that can be found at https://google.github.io/styleguide/javaguide.html.
+
+    - the Java Language Specification at
+      http://java.sun.com/docs/books/jls/second_edition/html/index.html
+
+    - the Sun Code Conventions at http://java.sun.com/docs/codeconv/
+
+    - the Javadoc guidelines at
+      http://java.sun.com/j2se/javadoc/writingdoccomments/index.html
+
+    - the JDK Api documentation http://java.sun.com/j2se/docs/api/index.html
+
+    - some best practices
+
+  Checkstyle is very configurable. Be sure to read the documentation at
+  http://checkstyle.sf.net (or in your downloaded distribution).
+
+  Most Checks are configurable, be sure to consult the documentation.
+
+  To completely disable a check, just comment it out or delete it from the file.
+
+  Finally, it is worth reading the documentation.
+
+  Author: J.D. DeVaughn-Brown
+
+-->
+
+<module name="Checker">
+    <!--
+        If you set the basedir property below, then all reported file
+        names will be relative to the specified directory. See
+        http://checkstyle.sourceforge.net/5.x/config.html#Checker
+
+        <property name="basedir" value="${basedir}"/>
+    -->
+
+    <!-- =========================================================================== -->
+    <!-- =========================================================================== -->
+    <!-- CHECKS THAT DO NOT REQUIRE WALKING THE PARSE TREE                           -->
+    <!-- =========================================================================== -->
+    <!-- =========================================================================== -->
+
+    <property name="fileExtensions" value="java, properties, xml"/>
+
+    <!-- Checks that a package-info.java file exists for each package.     -->
+    <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage -->
+    <!-- <module name="JavadocPackage"/> -->
+
+    <!-- Checks whether files end with a new line.                        -->
+    <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
+    <module name="NewlineAtEndOfFile"/>
+
+    <!-- Checks that property files contain the same keys.         -->
+    <!-- See http://checkstyle.sf.net/config_misc.html#Translation -->
+    <module name="Translation"/>
+
+    <!-- Checks for Size Violations.                    -->
+    <!-- See http://checkstyle.sf.net/config_sizes.html -->
+    <!-- Checks that no file is more than 1500 lines long. -->
+    <module name="FileLength">
+        <property name="max" value="1500"/>
+    </module>
+
+    <!-- Checks for whitespace                               -->
+    <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+    <!-- Checks that no tab characters in the source code; report only first instance. -->
+    <module name="FileTabCharacter">
+        <property name="fileExtensions" value="java, toy, txt"/>
+        <property name="eachLine" value="false"/>
+        <message key="containsTab" value="Line contains a tab character. Configure your editor to replace tabs with spaces."/>
+        <message key="file.containsTab" value="File contains tab characters (this is the first occurrence). Configure your editor to replace tabs with spaces."/>
+    </module>
+
+    <!-- Miscellaneous other checks.                   -->
+    <!-- See http://checkstyle.sf.net/config_misc.html -->
+    <module name="RegexpSingleline">
+       <property name="format" value="\s+$"/>
+       <property name="minimum" value="0"/>
+       <property name="maximum" value="0"/>
+       <property name="message" value="Line has trailing spaces."/>
+    </module>
+
+    <!-- Checks for Headers                                -->
+    <!-- See http://checkstyle.sf.net/config_header.html   -->
+    <!-- <module name="Header"> -->
+    <!--   <property name="headerFile" value="${checkstyle.header.file}"/> -->
+    <!--   <property name="fileExtensions" value="java"/> -->
+    <!-- </module> -->
+
+    <!-- =========================================================================== -->
+    <!-- =========================================================================== -->
+    <!-- CHECKS THAT REQUIRE WALKING THE PARSE TREE                                  -->
+    <!-- =========================================================================== -->
+    <!-- =========================================================================== -->
+
+    <module name="TreeWalker">
+        <property name="tabWidth" value="4"/>
+
+        <!-- Checks for Javadoc comments.                     -->
+        <!-- See http://checkstyle.sf.net/config_javadoc.html-->
+        <module name="JavadocStyle"/>
+        <module name="NonEmptyAtclauseDescription"/>
+        <module name="AtclauseOrder"/>
+        <module name="JavadocType"/>
+        <module name="JavadocMethod"/>
+        <module name="JavadocVariable"/>
+        <module name="WriteTag"/>
+        <module name="SummaryJavadoc"/>
+        <module name="JavadocParagraph"/>
+        <module name="SingleLineJavadoc"/>
+
+        <!-- Checks for Naming Conventions.                  -->
+        <!-- See http://checkstyle.sf.net/config_naming.html -->
+        <!-- static final field -->
+        <module name="ConstantName">
+            <message key="name.invalidPattern" value="The constant ''{0}'' must be ALL_UPPERCASE, with words separated by underscores."/>
+        </module>
+        <!-- includes catch parameters -->
+        <module name="LocalFinalVariableName">
+            <property name="format" value="^([a-z][a-zA-Z0-9]*|[A-Z][A-Z_0-9]*)$"/>
+            <message key="name.invalidPattern" value="The local final variable ''{0}'' must start with a lowercase letter and use camelCase (or be ALL_UPPERCASE if it is a constant)."/>
+        </module>
+        <!-- local variables, allow camelCase or ALL_UPPERCASE of two or more characters -->
+        <module name="LocalVariableName">
+            <!-- <property name="format" value="^([a-z][a-zA-Z0-9]*|[A-Z][A-Z_0-9]+|G|[A-Z])$"/> -->
+            <property name="format" value="^([a-z][a-zA-Z0-9]*|[A-Z][A-Z_0-9]+|G)$"/>
+            <message key="name.invalidPattern" value="The local variable ''{0}'' must start with a lowercase letter and use camelCase."/>
+        </module>
+        <!-- instance variables must be camelCase or G -->
+        <module name="MemberName">
+            <property name="format" value="^([a-z][a-zA-Z0-9]*|G)$"/>
+            <message key="name.invalidPattern" value="The instance variable ''{0}'' must start with a lowercase letter and use camelCase."/>
+        </module>
+        <!-- method name -->
+        <!-- ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="MethodName">
+            <message key="name.invalidPattern" value="The method ''{0}'' must start with a lowercase letter and use camelCase."/>
+            <message key="method.name.equals.class.name" value="The method name ''{0}'' must not be identical to the class name. Remove the return type if you intended to define a constructor instead of a method."/>
+        </module>
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+            <message key="name.invalidPattern" value="The package ''{0}'' must be lowercase, with package components separated by dots."/>
+        </module>
+        <!-- allows single letter uppercase parameter variable names in code -->
+        <module name="ParameterName">
+            <property name="format" value="^([a-z][a-zA-Z0-9]*|G|[A-Z])$"/>
+            <message key="name.invalidPattern" value="The parameter variable ''{0}'' must start with a lowercase letter and use camelCase."/>
+        </module>
+        <!-- static non-final field -->
+        <!-- ^[a-z][a-zA-Z0-9]*$ -->
+        <module name="StaticVariableName">
+            <message key="name.invalidPattern" value="The static variable ''{0}'' must start with a lowercase letter and use camelCase. If you intended ''{0}'' to be a constant, add the modifier ''final'' immediately after ''static'' and use ALL_UPPERCASE."/>
+        </module>
+        <!-- type name -->
+        <!-- ^[A-Z][a-zA-Z0-9]*$ -->
+        <module name="TypeName">
+            <message key="name.invalidPattern" value="The class ''{0}'' must start with an uppercase letter and use CamelCase."/>
+        </module>
+
+        <module name="ClassTypeParameterName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern" value="The type parameter ''{0}'' must either be a single uppercase letter or start with an uppercase letter and use CamelCase."/>
+        </module>
+
+        <module name="MethodTypeParameterName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern" value="The type parameter ''{0}'' must either be a single uppercase letter or start with an uppercase letter and use CamelCase."/>
+        </module>
+
+        <module name="InterfaceTypeParameterName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+            <message key="name.invalidPattern" value="The type parameter ''{0}'' must either be a single uppercase letter or start with an uppercase letter and use CamelCase."/>
+        </module>
+
+        <!-- Checks for imports                              -->
+        <!-- See http://checkstyle.sf.net/config_import.html -->
+        <module name="AvoidStarImport">
+            <message key="import.avoidStar" value="Do not use .* in import statements."/>
+        </module>
+        <module name="AvoidStaticImport">
+            <message key="import.avoidStatic" value="Do not use static imports."/>
+        </module>
+        <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
+        <module name="RedundantImport">
+            <message key="import.same" value="Unnecessary import statement for ''{0}'' becaue it is in the same package as this class."/>
+            <message key="import.lang" value="Unnecessary import statement for ''{0}'' because it is from the package ''java.lang''."/>
+            <message key="import.duplicate" value="Duplicate import statement for ''{1}''."/>
+        </module>
+        <module name="UnusedImports">
+            <message key="import.unused" value="Unused import statement for ''{0}''."/>
+        </module>
+
+        <!-- =========================================================================== -->
+        <!-- Modifiers                                                                   -->
+        <!-- http://checkstyle.sourceforge.net/config_modifier.html                      -->
+        <!-- =========================================================================== -->
+
+        <module name="ModifierOrder">
+            <message key = "mod.order" value = "The modifier ''{0}'' is out of order. The preferred order is [''public'', ''protected'', ''private'', ''abstract'', ''static'', ''final'', ''transient'', ''volatile'', ''synchronized'', ''native'', and ''strictfp'']."/>
+        </module>
+
+        <!-- removed CTOR_DEF for public constructors in private nested classes -->
+        <module name="RedundantModifier">
+            <property name="tokens" value="METHOD_DEF,VARIABLE_DEF,ANNOTATION_FIELD_DEF,
+                                           INTERFACE_DEF,CLASS_DEF,ENUM_DEF"/>
+        </module>
+
+        <!-- Checks for blocks. You know, those {}'s         -->
+        <!-- See http://checkstyle.sf.net/config_blocks.html -->
+        <module name="AvoidNestedBlocks">
+            <message key="block.nested" value="Avoid nested blocks: the curly braces serve no purpose."/>
+        </module>
+        <module name="EmptyBlock"/>
+        <module name="LeftCurly"/>
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_DO"/>
+        </module>
+        <module name="RightCurly"/>
+
+        <!-- Checks for common coding problems               -->
+        <!-- See http://checkstyle.sf.net/config_coding.html -->
+        <module name="CovariantEquals">
+            <message key="covariant.equals" value="The type of the parameter variable for the ''equals()'' method must be ''Object''."/>
+        </module>
+        <module name="AvoidInlineConditionals"/>
+        <module name="EmptyStatement">
+            <message key="empty.statement" value="Are you sure you want an empty statement here? An empty statement might indicate a superfluous semicolon."/>
+        </module>
+        <module name="EqualsHashCode"/>
+        <module name="HiddenField" >
+    		    <property name="ignoreSetter" value="true" />
+    		    <property name="ignoreConstructorParameter" value="true" />
+		    </module>
+        <module name="ModifiedControlVariable">
+            <message key="modified.control.variable" value="Control variable ''{0}'' is modified inside loop."/>
+        </module>
+        <module name="IllegalInstantiation"/>
+        <module name="InnerAssignment"/>
+        <module name="MagicNumber">
+            <property name="tokens" value="NUM_DOUBLE, NUM_FLOAT, NUM_INT, NUM_LONG"/>
+            <property name="ignoreNumbers" value="-256, -128, -100, -64, -32, -16, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, -0.5, -0.25, 0, 0.25, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 100, 128, 256, 512, 1024, 32768"/>
+            <message key="magic.number" value="''{0}'' looks like a hard-coded value. This should be made a constant variable with a symbolic name (such as AVOGADROS_NUMBER)."/>
+        </module>
+        <module name="MissingSwitchDefault">
+            <message key="missing.switch.default" value="A switch statement must contain a ''default'' clause."/>
+        </module>
+        <module name="SimplifyBooleanExpression">
+            <message key="simplify.expression" value="Boolean expression can be simplified, e.g., use ''if (!isEmpty)'' instead of ''if (isEmpty == false)''."/>
+        </module>
+        <module name="SimplifyBooleanReturn">
+            <message key="simplify.boolreturn" value="Conditional logic can be removed in return statement, e.g., use ''return x >= 0'' instead of ''if (x >= 0) return true; else return false;''."/>
+        </module>
+        <module name="StringLiteralEquality">
+            <message key="string.literal.equality" value="Compare string literals using ''equals()'', not ''{0}''."/>
+        </module>
+
+        <module name="NestedForDepth">
+            <property name="max" value="4"/>
+        </module>
+        <module name="NestedIfDepth">
+            <property name="max" value="3"/>
+        </module>
+        <module name="NestedTryDepth">
+            <property name="max" value="1"/>
+        </module>
+        <module name="NoClone"/>
+        <module name="NoFinalizer"/>
+        <module name="SuperClone"/>
+        <module name="SuperFinalize"/>
+
+        <!-- Checks for class design                         -->
+        <!-- See http://checkstyle.sf.net/config_design.html -->
+        <!-- <module name="DesignForExtension"/> -->
+        <module name="DeclarationOrder">
+            <message key="declaration.order.constructor" value="Define constructors after static and instance variables but before methods."/>
+            <message key="declaration.order.method" value="Define methods after static variables, instance variables, and constructors."/>
+            <message key="declaration.order.instance" value="Declare instance variables after static variables but before constructors and methods."/>
+            <message key="declaration.order.access" value="Declare static and instance variables in order of their access modifiers: public, protected, package, and private."/>
+            <message key="declaration.order.static" value="Declare static variables before instance variables, constructors, and methods."/>
+        </module>
+        <!-- <module name="FinalClass"/>
+        <module name="HideUtilityClassConstructor"/> -->
+        <module name="InterfaceIsType">
+            <message key="interface.type" value="An interface must describe a type (and have methods)."/>
+        </module>
+        <module name="VisibilityModifier"/>
+        <module name="OneTopLevelClass">
+            <message key="one.top.level.class" value="The .java file must have exactly one top-level class."/>
+        </module>
+
+
+
+        <!-- Miscellaneous other checks.                   -->
+        <!-- See http://checkstyle.sf.net/config_misc.html -->
+        <module name="ArrayTypeStyle">
+            <message key="array.type.style" value="To specify an array type, put the square brackets before the variable name, e.g., ''String[] args'' instead of ''String args[]''."/>
+        </module>
+        <module name="ParameterAssignment">
+            <message key="parameter.assignment" value="Changing the value of the parameter variable ''{0}'' suggests poor design. Instead, define a local variable."/>
+        </module>
+        <module name="TodoComment"/>
+        <module name="UpperEll">
+            <message key="upperEll" value="Use an uppercase ''L'' instead of a lowercase ''l'' to specify a literal of type long."/>
+        </module>
+
+        <module name="DescendantToken">
+            <property name="tokens" value="LITERAL_ASSERT"/>
+            <property name="limitedTokens" value="ASSIGN,DEC,INC,POST_DEC,
+                POST_INC,PLUS_ASSIGN,MINUS_ASSIGN,STAR_ASSIGN,DIV_ASSIGN,MOD_ASSIGN,
+                BSR_ASSIGN,SR_ASSIGN,SL_ASSIGN,BAND_ASSIGN,BXOR_ASSIGN,BOR_ASSIGN"/>
+            <property name="maximumNumber" value="0"/>
+            <property name="maximumMessage" value="Assert statements must not produce side effects."/>
+        </module>
+
+        <module name="DescendantToken">
+            <property name="tokens" value="EQUAL,NOT_EQUAL"/>
+            <property name="limitedTokens" value="LITERAL_THIS,LITERAL_NULL"/>
+            <property name="maximumNumber" value="1"/>
+            <property name="maximumDepth" value="1"/>
+            <property name="sumTokenCounts" value="true"/>
+            <property name="maximumMessage" value="Do not compare ''this'' with ''null''; it is never null."/>
+        </module>
+
+        <module name="DefaultComesLast"/>
+        <module name="FallThrough"/>
+
+        <module name="OneStatementPerLine">
+            <message key="multiple.statements.line" value="Do not put multiple statements on the same line."/>
+        </module>
+
+        <module name="IllegalToken">
+            <property name="tokens" value="LITERAL_FLOAT"/>
+            <message key="illegal.token" value="Use the primitive type ''double'' instead of the primitive type ''float''."/>
+        </module>
+
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_FLOAT"/>
+            <property name="format" value="^.*f$"/>
+            <message key="illegal.token.text" value="Use a ''double'' literal instead of a ''float'' literal."/>
+        </module>
+
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_FLOAT, NUM_DOUBLE"/>
+            <property name="format" value="^\..*"/>
+            <message key="illegal.token.text" value="Use at least one digit to the left of the decimal point. For example, use the literal ''0.5'' instead of ''.5''."/>
+        </module>
+
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_INT,NUM_LONG"/>
+            <property name="format" value="^0[^lxb]"/>
+            <property name="ignoreCase" value="true"/>
+            <message key="illegal.token.text" value="A leading 0 in an integer literal signifies that it is an octal (base-8) integer."/>
+        </module>
+
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_INT,NUM_LONG"/>
+            <property name="format" value="^2147483647L?$"/>
+            <message key="illegal.token.text" value="Use the named constant ''Integer.MAX_VALUE'' instead of ''2147483647''."/>
+        </module>
+
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_INT,NUM_LONG"/>
+            <property name="format" value="^2147483648L?$"/>
+            <message key="illegal.token.text" value="Use the named constant ''Integer.MIN_VALUE'' instead of ''-2147483648''."/>
+        </module>
+
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_LONG"/>
+            <property name="format" value="^9223372036854775807L$"/>
+            <message key="illegal.token.text" value="Use the named constant ''Long.MAX_VALUE'' instead of ''9223372036854775807L''."/>
+        </module>
+
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_LONG"/>
+            <property name="format" value="^9223372036854775808L$"/>
+            <message key="illegal.token.text" value="Use the named constant ''Long.MIN_VALUE'' instead of ''-9223372036854775808L''."/>
+        </module>
+
+        <!-- Checks that // and /* comments are followed by whitespace. -->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="COMMENT_CONTENT"/>
+            <property name="format" value="^[\*/]*[A-Za-z0-9]"/>
+            <message key="illegal.token.text" value="''//'' or ''/*'' is not followed by whitespace."/>
+        </module>
+
+        <!-- Checks that comments are not empty. -->
+        <module name="IllegalTokenText">
+           <property name="tokens" value="COMMENT_CONTENT"/>
+           <property name="format" value="^\s*$"/>
+            <message key="illegal.token.text" value="The comment is empty."/>
+        </module>
+
+        <!-- Do not name a variable 'l'. -->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="IDENT"/>
+            <property name="format" value="^l$"/>
+            <message key="illegal.token.text" value="Do not use the letter ''l'' as a variable name (or other identifier). It is hard to distinguish from the number ''1''."/>
+        </module>
+
+        <!-- Do not name a variable 'o'. -->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="IDENT"/>
+            <property name="format" value="^[oO]$"/>
+            <message key="illegal.token.text" value="Do not use the letter ''o'' or ''O'' as a variable name (or other identifier). It is hard to distinguish from the number ''0''."/>
+        </module>
+
+        <!-- Do not name a variable 'one', 'two', 'three', and so forth -->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="IDENT"/>
+            <property name="format" value="^(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)$"/>
+            <property name="ignoreCase" value="true"/>
+            <message key="illegal.token.text" value="Do not use the name of a number (such as ''ten'') as a variable name (or other identifier)."/>
+        </module>
+
+        <!-- =========================================================================== -->
+        <!-- Regexp                                                                      -->
+        <!-- http://checkstyle.sourceforge.net/config_regexp.html                        -->
+        <!-- =========================================================================== -->
+
+
+        <!-- check for Math.pow(*, 3) and Math.pow(*, 0.5) -->
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="\bMath\.pow\([^,]*, *3(\.0?)?\)"/>
+            <property name="ignoreComments" value="true"/>
+            <property name="message" value="''Math.pow(x, 3)'' is slow. Use ''x*x*x'' instead."/>
+        </module>
+
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="\bMath\.pow\([^,]*, *0?\.5\)"/>
+            <property name="ignoreComments" value="true"/>
+            <property name="message" value="Use ''Math.sqrt(x)'' instead of ''Math.pow(x, 0.5)''."/>
+        </module>
+
+        <!-- Checks for Size Violations.                    -->
+        <!-- See http://checkstyle.sf.net/config_sizes.html -->
+        <module name="LineLength">
+        	<property name="max" value="125"/>
+        	<property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+        </module>
+        <module name="MethodLength"/>
+        <module name="ParameterNumber"/>
+
+        <module name="OuterTypeNumber">
+            <message key="maxOuterTypes" value="Your program defines {0,number,integer} outer types, but there should be only 1."/>
+        </module>
+
+        <module name="MethodCount"/>
+
+        <!-- Checks for whitespace                               -->
+        <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+        <module name="EmptyForIteratorPad"/>
+        <module name="GenericWhitespace"/>
+        <module name="MethodParamPad"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="OperatorWrap"/>
+        <module name="ParenPad"/>
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter">
+            <message key="ws.typeCast" value="Typecast is not followed by whitespace."/>
+        </module>
+        <module name="WhitespaceAround"/>
+
+    </module>
+
+</module>
