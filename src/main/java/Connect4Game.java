@@ -1,34 +1,40 @@
 /**
  * The data structure for a game of Connect 4.
- * 
- * Connect4Game is made of a certain number of Connect4Columns. Each column represents
- * a column from the current state of the game.
- * 
- * You should not modify this class, but you will need to use methods within it.
+ *
+ * <p>Connect4Game is made of a certain number of Connect4Columns. Each column represents
+ * a column from the current state of the game.</p>
+ *
+ * <p>You should not modify this class, but you will need to use methods within it.</p>
  */
 public class Connect4Game {
+    /**
+     * The Connect4Columns that make up the board.
+     */
     private Connect4Column[] columns;
+    /**
+     * A boolean to keep track of who goes first.
+     */
     private boolean redPlayedFirst;
 
     /**
      * Construct a new Connect 4 game with the given size.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method to develop a strategy.</p>
+     *
      * @param numCols The number of columns in the game board
      * @param numRows The number of rows in the game board
      */
     public Connect4Game(int numCols, int numRows) {
         columns = new Connect4Column[numCols];
-        for(int i = 0; i < numCols; i++) {
+        for (int i = 0; i < numCols; i++) {
             columns[i] = new Connect4Column(numRows);
         }
     }
     /**
      * Copy an existing Connect 4 game.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method to develop a strategy.</p>
+     *
      * @param game The game to copy.
      */
     public Connect4Game(Connect4Game game) {
@@ -40,26 +46,25 @@ public class Connect4Game {
 
     /**
      * Retrieve a certain Connect4Column from the game board.
-     * 
-     * Your agent WILL need to use this method.
-     * 
+     *
+     * <p>Your agent WILL need to use this method.</p>
+     *
      * @param i The column to retrieve.
      * @return the ith Connect4Column if it exists; null otherwise
      */
     public Connect4Column getColumn(int i) {
         if (i < columns.length && i >= 0) {
             return columns[i];
-        }
-        else {
+        } else {
             return null;
         }
     }
 
     /**
      * Get the total number of columns in the game board.
-     * 
-     * Your agent WILL need to use this method.
-     * 
+     *
+     * <p>Your agent WILL need to use this method.</p>
+     *
      * @return the number of columns in the game board.
      */
     public int getColumnCount() {
@@ -67,9 +72,9 @@ public class Connect4Game {
     }
     /**
      * Get the total number of rows in the game board.
-     * 
-     * Your agent WILL need to use this method.
-     * 
+     *
+     * <p>Your agent WILL need to use this method.</p>
+     *
      * @return the number of rows in the game board.
      */
     public int getRowCount() {
@@ -77,8 +82,8 @@ public class Connect4Game {
     }
     /**
      * Start a new game.
-     * 
-     * Your agent will not need to use this method.
+     *
+     * <p>Your agent may use this method to develop a strategy.</p>
      */
     public void clearBoard() {
         for (int i = 0; i < getColumnCount(); i++) {
@@ -89,9 +94,9 @@ public class Connect4Game {
     }
     /**
      * Retrieve a matrix form of the board.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method to develop a strategy.</p>
+     *
      * @return a character matrix of the game board.
      */
     public char[][] getBoardMatrix() {
@@ -101,12 +106,10 @@ public class Connect4Game {
                 if (getColumn(i).getSlot(j).getIsFilled()) {
                     if (getColumn(i).getSlot(j).getIsRed()) {
                         board[j][i] = 'R';
-                    }
-                    else {
+                    } else {
                         board[j][i] = 'Y';
                     }
-                }
-                else {
+                } else {
                     board[j][i] = 'B';
                 }
             }
@@ -115,9 +118,9 @@ public class Connect4Game {
     }
     /**
      * Check if the board is full.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method to develop a strategy.</p>
+     *
      * @return true if the board is full, false otherwise.
      */
     public boolean boardFull() {
@@ -133,9 +136,9 @@ public class Connect4Game {
     }
     /**
      * Check if the game has been won.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method in developing a strategy.</p>
+     *
      * @return 'R' if red won, 'Y' if yellow won, 'N' if the game has not been won.
      */
     public char gameWon() {
@@ -196,9 +199,9 @@ public class Connect4Game {
     }
     /**
      * Validate that the given board is a valid next state following this board.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method in developing a strategy.</p>
+     *
      * @param after the next board state.
      * @return
      *         "" if there are no errors else
@@ -211,8 +214,7 @@ public class Connect4Game {
                 if (after.getColumn(i).getSlot(j).getIsFilled()) {
                     if (after.getColumn(i).getSlot(j).getIsRed()) {
                         redSlots++;
-                    }
-                    else {
+                    } else {
                         yellowSlots++;
                     }
                 }
@@ -246,16 +248,13 @@ public class Connect4Game {
         if (after.getRedPlayedFirst()) {
             if (redSlots < yellowSlots) {
                 return "Invalid move: yellow moved during red's turn.";
-            }
-            else if (redSlots > yellowSlots + 1) {
+            } else if (redSlots > yellowSlots + 1) {
                 return "Invalid move: red moved during yellow's turn.";
             }
-        }
-        else {
+        } else {
             if (yellowSlots < redSlots) {
                 return "Invalid move: red moved during yellow's turn.";
-            }
-            else if (yellowSlots > redSlots + 1) {
+            } else if (yellowSlots > redSlots + 1) {
                 return "Invalid move: yellow moved during red's turn.";
             }
         }
@@ -263,9 +262,9 @@ public class Connect4Game {
     }
     /**
      * Highlight the winning moves in a game.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent will not need to use this method.</p>
+     *
      * @param row the row of the token to highlight
      * @param column the column of the token to highlight
      */
@@ -275,9 +274,9 @@ public class Connect4Game {
 
     /**
      * Check whether red played first. This is used to confirm the players are alternating correctly.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method to develop a strategy.</p>
+     *
      * @return true if red played first in this game, false otherwise.
      */
     public boolean getRedPlayedFirst() {
@@ -286,9 +285,9 @@ public class Connect4Game {
 
     /**
      * Sets whether red played first. This is used to confirm the players are alternating correctly.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent may use this method to develop a strategy.</p>
+     *
      * @param redPlayedFirst true if red played first in this game, false otherwise.
      */
     public void setRedPlayedFirst(boolean redPlayedFirst) {

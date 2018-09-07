@@ -293,7 +293,9 @@
         <module name="InterfaceIsType">
             <message key="interface.type" value="An interface must describe a type (and have methods)."/>
         </module>
-        <module name="VisibilityModifier"/>
+        <module name="VisibilityModifier">
+          <property name="protectedAllowed" value="true"/>
+        </module>
         <module name="OneTopLevelClass">
             <message key="one.top.level.class" value="The .java file must have exactly one top-level class."/>
         </module>
@@ -343,11 +345,11 @@
             <message key="illegal.token" value="Use the primitive type ''double'' instead of the primitive type ''float''."/>
         </module>
 
-        <module name="IllegalTokenText">
+        <!-- <module name="IllegalTokenText">
             <property name="tokens" value="NUM_FLOAT"/>
             <property name="format" value="^.*f$"/>
             <message key="illegal.token.text" value="Use a ''double'' literal instead of a ''float'' literal."/>
-        </module>
+        </module> -->
 
         <module name="IllegalTokenText">
             <property name="tokens" value="NUM_FLOAT, NUM_DOUBLE"/>
@@ -447,7 +449,11 @@
         	<property name="max" value="125"/>
         	<property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
         </module>
-        <module name="MethodLength"/>
+        <module name="MethodLength">
+          <property name="tokens" value="METHOD_DEF"/>
+          <property name="max" value="60"/>
+          <property name="countEmpty" value="false"/>
+        </module>
         <module name="ParameterNumber"/>
 
         <module name="OuterTypeNumber">

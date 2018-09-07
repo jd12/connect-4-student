@@ -1,28 +1,58 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * The main driver of the Connect4Game, as well as the visualization of it.
- * 
- * You should not modify this class, and your agent should not need to access the methods within
- * it directly.
+ *
+ * <p>You should not modify this class, and your agent should not need to access the methods within
+ * it directly.</p>
  */
+@SuppressWarnings("serial")
 public class Connect4Frame extends JFrame {
-  Connect4Panel myPanel;  // the panel storing the visual of the game itself
-  Connect4Game myGame;    // the game itself
-  Agent redPlayer, yellowPlayer;   // the two players playing the game
-  boolean redPlayerturn, gameActive;  // booleans controlling whose turn it is and whether a game is ongoing
-  JButton newGameButton, nextMoveButton, playToEndButton;   // the buttons controlling the game
-  JLabel updateLabel; // the status label describing the events of the game
-  Random r;   // a random number generator to randomly decide who plays first
+  /**
+   * The panel storing the visual of the game itself.
+   */
+  private Connect4Panel myPanel;
+  /**
+   * The game itself.
+   */
+  private Connect4Game myGame;
+  /**
+   * The two players playing the game.
+   */
+  private Agent redPlayer, yellowPlayer;
+  /**
+   * Booleans controlling whose turn it is and whether a game is ongoing.
+   */
+  private boolean redPlayerturn, gameActive;
+  /**
+   * The buttons controlling the game.
+   */
+  private JButton newGameButton, nextMoveButton, playToEndButton;
+  /**
+   * The status label describing the events of the game.
+   */
+  private JLabel updateLabel;
+  /**
+   * A random number generator to randomly decide who plays first.
+   */
+  private Random r;
 
   /**
    * Creates a new Connect4Frame with a given game and pair of players.
-   * 
-   * Your agent will not need to use this method.
-   * 
+   *
+   * <p>Your agent will not need to use this method.</p>
+   *
    * @param game the game itself.
    * @param redPlayer the agent playing as the red tokens.
    * @param yellowPlayer the agent playing as the yellow tokens.
@@ -58,7 +88,8 @@ public class Connect4Frame extends JFrame {
     playToEndButton = new JButton("Play to End");   // creates the button for finishing the game
     playToEndButton.setEnabled(false);  // disables the button until a game is started
     playToEndButton.setAlignmentX(Component.CENTER_ALIGNMENT);  // centers the button
-    playToEndButton.addActionListener(new ActionListener() {    // connects the play to end button to its buttonPressed method
+    // connects the play to end button to its buttonPressed method
+    playToEndButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         playToEndButtonPressed();
       }
@@ -90,9 +121,9 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Changes the text of the update label.
-   * 
-   * Your agent will not need to use this method.
-   * 
+   *
+   * <p>Your agent will not need to use this method.</p>
+   *
    * @param text the next text for the update label.
    */
   public void alert(String text) {
@@ -102,18 +133,16 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Runs the next move of the game.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   private void nextMove() {
     Connect4Game oldBoard = new Connect4Game(myGame);   // store the old board for validation
-    // if it's the red player's turn, run their move
+    // Run the appropriate player's move
     if (redPlayerturn) {
       redPlayer.move();
       alert(yellowPlayer.toString() + " plays next...");
-    }
-    // if it's the yellow player's turn, run their move
-    else {
+    } else {
       yellowPlayer.move();
       alert(redPlayer.toString() + " plays next...");
     }
@@ -131,17 +160,13 @@ public class Connect4Frame extends JFrame {
     if (won != 'N') {
       disableButtons();   // disable the buttons
       gameActive = false;
-      // if red won, say so
+      // if a player won, say so
       if (myGame.gameWon() == 'R') {
         alert(redPlayer.toString() + " wins!");
-      }
-      // if yellow won, say so
-      else if (myGame.gameWon() == 'Y') {
+      } else if (myGame.gameWon() == 'Y') {
         alert(yellowPlayer.toString() + " wins!");
       }
-    }
-    // if the board is full...
-    else if (myGame.boardFull()) {
+    } else if (myGame.boardFull()) {
       disableButtons();   // disable the buttons
       alert("The game ended in a draw!"); // announce the draw
       gameActive = false;
@@ -151,8 +176,8 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Clear the board and start a new game.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   private void newGame() {
     myGame.clearBoard();
@@ -162,8 +187,7 @@ public class Connect4Frame extends JFrame {
     if (redPlayerturn) {
       alert(redPlayer.toString() + " plays first!");
       myGame.setRedPlayedFirst(true);
-    }
-    else {
+    } else {
       alert(yellowPlayer.toString() + " plays first!");
       myGame.setRedPlayedFirst(false);
     }
@@ -172,8 +196,8 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Runs the game until it's over.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   private void playToEnd() {
     // keep playing the next move until the game ends
@@ -186,25 +210,22 @@ public class Connect4Frame extends JFrame {
       disableButtons();
       if (myGame.gameWon() == 'R') {
         alert(redPlayer.toString() + " wins!");
-      }
-      else if (myGame.gameWon() == 'Y') {
+      } else if (myGame.gameWon() == 'Y') {
         alert(yellowPlayer.toString() + " wins!");
       }
-    }
-    else if (myGame.boardFull()) {
+    } else if (myGame.boardFull()) {
       disableButtons();
       alert("The game ended in a draw!");
-    }
-    // if it didn't end in a win or draw, leave the error message u
-    else {
+    } else {
+   // if it didn't end in a win or draw, leave the error message up
       disableButtons();
     }
   }
 
   /**
    * Reacts to the new game button being pressed.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   public void newGameButtonPressed() {
     newGame();
@@ -212,8 +233,8 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Reacts to the next move button being pressed.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   public void nextMoveButtonPressed() {
     nextMove();
@@ -221,8 +242,8 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Reacts to the play to end button being pressed.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   public void playToEndButtonPressed() {
     playToEnd();
@@ -230,8 +251,8 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Disables the buttons.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   private void disableButtons() {
     nextMoveButton.setEnabled(false);
@@ -240,8 +261,8 @@ public class Connect4Frame extends JFrame {
 
   /**
    * Enables the buttons.
-   * 
-   * Your agent will not need to use this method.
+   *
+   * <p>Your agent will not need to use this method.</p>
    */
   private void enableButtons() {
     nextMoveButton.setEnabled(true);

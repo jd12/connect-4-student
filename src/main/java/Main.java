@@ -1,9 +1,9 @@
 /**
  * The main driver of the program. This file will create the game, create the two agents,
  * and create the window for the game. After that, Connect4Frame runs everything.
- * 
- * You should only modify this class to change which agents are playing.
- * Your options are:
+ *
+ * <p>You should only modify this class to change which agents are playing.
+ * Your options are:</p>
  * <ul>
  * <li>RandomAgent</li>
  * <li>BeginnerAgent</li>
@@ -26,6 +26,7 @@ public class Main {
         // create the yellow player, any subclass of Agent
         Agent yellowPlayer = new BeginnerAgent(game, false);
         // create the game window
+        @SuppressWarnings("unused")
         Connect4Frame mainframe = new Connect4Frame(game, redPlayer, yellowPlayer);
     }
 }

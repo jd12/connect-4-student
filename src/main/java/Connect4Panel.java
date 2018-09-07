@@ -1,42 +1,54 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Stroke;
+
+import javax.swing.JPanel;
 
 /**
  * The panel for displaying the current status of the game itself.
- * 
- * You should not modify this class, and your agent should not need to access the methods within
- * it directly.
+ *
+ * <p>You should not modify this class, and your agent should not need to access the methods within
+ * it directly.</p>
  */
-public class Connect4Panel extends JPanel
-{
-    private Connect4Game myGame;    // the game to display
-    private int slotDiameter;  // size of the individual slots
-    private int slotSpacing; // space between slots
-    
+@SuppressWarnings("serial")
+public class Connect4Panel extends JPanel {
+    /**
+     * The game to display.
+     */
+    private Connect4Game myGame;
+    /**
+     * Size of the individual slots.
+     */
+    private final int slotDiameter = 75;
+    /**
+     * Space between slots.
+     */
+    private final int slotSpacing = 10;
+
     /**
      * Creates a new Connect4Panel with a given game.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent will not need to use this method.</p>
+     *
      * @param game the game to display.
      */
     public Connect4Panel(Connect4Game game) {
         super();
         this.myGame = game;
-        
-        this.slotDiameter = 75;
-        this.slotSpacing = 10;
-        
         final int WIDTH = 605;
         final int HEIGHT = 520;
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
-    
+
     /**
      * Paints the current status of the game.
-     * 
-     * Your agent will not need to use this method.
-     * 
+     *
+     * <p>Your agent will not need to use this method.</p>
+     *
      * @param g the graphics object with which to paint.
      */
     public void paint(Graphics g) {
@@ -52,12 +64,10 @@ public class Connect4Panel extends JPanel
                 Color color;
                 if (!currentSlot.getIsFilled()) {
                     color = Color.WHITE;
-                }
-                else {
+                } else {
                     if (currentSlot.getIsRed()) {
                         color = Color.RED;
-                    }
-                    else {
+                    } else {
                         color = Color.YELLOW;
                     }
                 }
@@ -73,8 +83,8 @@ public class Connect4Panel extends JPanel
 
     /**
      * Draw a single slot.
-     * 
-     * Your agent will not need to use this method.
+     *
+     * <p>Your agent will not need to use this method.</p>
      *
      * @param g2 the graphics object with which to paint.
      * @param x the top-left x-coordinate where to draw the slot.
@@ -87,8 +97,8 @@ public class Connect4Panel extends JPanel
     }
     /**
      * Highlight a slot.
-     * 
-     * Your agent will not need to use this method.
+     *
+     * <p>Your agent will not need to use this method.</p>
      *
      * @param g2 the graphics object with which to paint.
      * @param x the top-left x-coordinate where to draw the highlight.

@@ -1,22 +1,28 @@
 /**
  * The abstract class for an Agent that plays Connect 4.
  *
- * All Agents must have three things: a constructor that initializes the agent with a game
- * and whether the agent is the red player, a name, and the ability to move.
+ * <p>All Agents must have three things: a constructor that initializes the agent with a game
+ * and whether the agent is the red player, a name, and the ability to move.</p>
  */
 public abstract class Agent {
     // A protected variable means that only
     // the current Class as well as Classes that inherit from the superclass
     // will have access to the variable.
+    /**
+     * The Connect4Game.
+     */
     protected Connect4Game myGame;
+    /**
+     * Boolean to keep track of what color the agent is.
+     */
     protected boolean iAmRed;
 
     /**
      * Constructs a new agent.
      *
-     * You MAY override this method in your agent. If you do, make sure to call...
+     * <p>You MAY override this method in your agent. If you do, make sure to call...
      *  super(game, iAmRed);
-     * ...before constructing any other initial information.
+     * ...before constructing any other initial information.</p>
      *
      * @param game the game for the agent to play.
      * @param iAmRed whether the agent is the red player.
@@ -30,13 +36,13 @@ public abstract class Agent {
      * ready for a move. After this method has run, exactly one piece should be added to the
      * game board with no other changes made.
      *
-     * You MUST override this method in your agent.
+     * <p>You MUST override this method in your agent.</p>
      */
     public abstract void move();
     /**
      * A name for the agent.
      *
-     * You MUST override this method in your agent.
+     * <p>You MUST override this method in your agent.</p>
      *
      * @return the agent's name.
      */
@@ -44,15 +50,14 @@ public abstract class Agent {
     /**
      * The way the agent's name is displayed in the game, with its color.
      *
-     * You should not need to modify this method.
+     * <p>You should not need to modify this method.</p>
      *
      * @return the agent's name to display in the game.
      */
     public String toString() {
         if (iAmRed) {
             return getName() + " (Red)";
-        }
-        else {
+        } else {
             return getName() + " (Yellow)";
         }
     }
