@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class MyAgentTest {
 
-  Connect4Game game; 
+  Connect4Game game;
 
 
   @Before
@@ -39,14 +39,14 @@ public class MyAgentTest {
 
     for (int i = 0; i < 3; i++) {
       redAgent.moveOnColumn(2);
-      yellowAgent.moveOnColumn(1);   
+      yellowAgent.moveOnColumn(1);
     }
 
     assertEquals(redAgent.iCanWin(), 2);
 
   }
 
-  // TODO: Write 2 test cases for testICanWinHorizontally 
+  // TODO: Write 2 test cases for testICanWinHorizontally
 
   // TODO: Write 2 test cases for testICanWinDiagonally
 
@@ -74,8 +74,8 @@ public class MyAgentTest {
     Agent yellowAgent = new BeginnerAgent(game, false);
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
-      game.clearBoard(); 
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      game.clearBoard();
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
@@ -98,8 +98,8 @@ public class MyAgentTest {
     Agent yellowAgent = new MyAgent(game, false);
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
-      game.clearBoard(); 
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      game.clearBoard();
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
@@ -122,8 +122,8 @@ public class MyAgentTest {
     Agent yellowAgent = new RandomAgent(game, false);
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
-      game.clearBoard(); 
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      game.clearBoard();
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
@@ -146,8 +146,8 @@ public class MyAgentTest {
     Agent yellowAgent = new MyAgent(game, false);
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
-      game.clearBoard(); 
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      game.clearBoard();
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
