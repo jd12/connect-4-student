@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class MyAgentTest {
 
-  Connect4Game game; 
+  Connect4Game game;
   final int NUM_OF_TEST_GAMES = 50;
 
 
@@ -40,14 +40,14 @@ public class MyAgentTest {
 
     for (int i = 0; i < 3; i++) {
       redAgent.moveOnColumn(2);
-      yellowAgent.moveOnColumn(1);   
+      yellowAgent.moveOnColumn(1);
     }
 
     assertEquals(2, redAgent.iCanWin());
 
   }
 
-  // TODO: Write 2 test cases for testICanWinHorizontally 
+  // TODO: Write 2 test cases for testICanWinHorizontally
 
   // TODO: Write 2 test cases for testICanWinDiagonally
 
@@ -122,8 +122,8 @@ public class MyAgentTest {
     Agent redAgent = new MyAgent(game, true);
     Agent yellowAgent = new RandomAgent(game, false);
     int numberOfWins = 0;
-    for (int i = 0; i < 50; i++) {
-      game.clearBoard(); 
+    for (int i = 0; i < NUM_OF_TEST_GAMES; i++) {
+      game.clearBoard();
       while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
@@ -146,8 +146,8 @@ public class MyAgentTest {
     Agent redAgent = new RandomAgent(game, true);
     Agent yellowAgent = new MyAgent(game, false);
     int numberOfWins = 0;
-    for (int i = 0; i < 50; i++) {
-      game.clearBoard(); 
+    for (int i = 0; i < NUM_OF_TEST_GAMES; i++) {
+      game.clearBoard();
       while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
